@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRJF Process Scheduler</title>
+    <link rel="stylesheet" href="srjf.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Process Scheduler</h1>
+        </div>
+        <nav>
+            <button id="menuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="menu">
+                <a href="#"><i class="fas fa-home"></i> Home</a>
+                <a href="#"><i class="fas fa-info-circle"></i> About</a>
+                <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="control-panel">
+            <div class="stats">
+                <div class="stat-box">
+                    <h3>Average TAT</h3>
+                    <p id="avg-tat">0</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Average WT</h3>
+                    <p id="avg-wt">0</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Average RT</h3>
+                    <p id="avg-rt">0</p>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button id="play" class="btn primary"><i class="fas fa-play"></i> Run Simulation</button>
+                <button id="reset" class="btn secondary"><i class="fas fa-redo"></i> Reset</button>
+            </div>
+        </section>
+
+        <section class="process-table">
+            <h2>Process Queue</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Process</th>
+                            <th>Arrival</th>
+                            <th>Burst</th>
+                            <th>Start</th>
+                            <th>Completion</th>
+                            <th>Response</th>
+                            <th>Turnaround</th>
+                            <th>Waiting</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>P1</td>
+                            <td>0</td>
+                            <td>5</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td><button class="btn-delete"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="add-process">
+            <h2>Add New Process</h2>
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="arrival-time">Arrival Time</label>
+                    <input type="number" id="arrival-time" min="0">
+                </div>
+                <div class="input-field">
+                    <label for="burst-time">Burst Time</label>
+                    <input type="number" id="burst-time" min="1">
+                </div>
+                <button id="add-process" class="btn primary"><i class="fas fa-plus"></i> Add</button>
+            </div>
+            <p id="error-message" class="error">Please enter valid values!</p>
+        </section>
+
+        <section class="visualization">
+            <h2>Gantt Chart</h2>
+            <div id="gantt-chart"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 SRJF Process Scheduler</p>
+    </footer>
+
+    <script src="srjf.js"></script>
+</body>
+</html>

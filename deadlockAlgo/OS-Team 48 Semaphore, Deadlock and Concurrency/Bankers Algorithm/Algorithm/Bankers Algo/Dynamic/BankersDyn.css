@@ -1,0 +1,53 @@
+/* BankersDyn.css (Partial - Before) */
+body {
+    font-family: "Ubuntu", sans-serif;
+    background-color: #d9e5ff;
+}
+
+h1 {
+    color: #1e4050;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+button {
+    background-color: #96b3ed;
+}
+
+/* Refactored (Conceptual - After) */
+:root {
+    /* Use rr.css variables */
+    --primary-text: #1e4050;
+    --background-color: #d9e5ff;
+    /* ...  other variables from rr.css */
+}
+
+body {
+    font-family: var(--font-sans); /* From rr.css */
+    background-color: var(--background-color);
+    color: var(--gray-800); /* From rr.css */
+}
+
+h1 {
+    color: var(--primary-text);
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.container {
+    max-width: 1200px; /* From rr.css */
+    width: 100%;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+}
+
+.btn {
+    /* Use base button styles from rr.css */
+    background-color: #96b3ed; /* Could be a variable */
+    /* ...  other button styles */
+}

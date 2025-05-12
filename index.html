@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OS Virtual Lab</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+      :root {
+        --primary: #2563eb;
+        --primary-dark: #1e40af;
+        --bg-light: #f8fafc;
+        --text-dark: #1e293b;
+        --text-light: #64748b;
+        --text-white: #f8fafc;
+        --accent: #06b6d4;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        color: var(--text-dark);
+        background-color: var(--bg-light);
+        overflow-x: hidden;
+      }
+
+      /* Navigation */
+      .nav {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 80px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+
+      .nav.scrolled {
+        height: 60px;
+        background-color: rgba(255, 255, 255, 0.98);
+      }
+
+      .nav-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        max-width: 1400px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+      }
+
+      .name {
+        font-weight: 600;
+        letter-spacing: 2px;
+        margin-right: 10px;
+        font-size: 18px;
+      }
+
+      .logo {
+        font-family: 'Playfair Display', serif;
+        font-size: 24px;
+        position: relative;
+      }
+
+      .logo::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 60%;
+        height: 3px;
+        background-color: var(--accent);
+      }
+
+      /* GitHub button removed */
+
+      /* Hero Section */
+      .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url("/api/placeholder/1920/1080");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        position: relative;
+      }
+
+      .hero::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 150px;
+        background: linear-gradient(to top, var(--bg-light), transparent);
+      }
+
+      .hero-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 5%;
+        width: 100%;
+      }
+
+      .heading-group {
+        color: white;
+        margin-bottom: 40px;
+      }
+
+      .heading-group h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 72px;
+        line-height: 1.1;
+        margin-bottom: 20px;
+        position: relative;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 1s forwards;
+        animation-delay: 0.2s;
+      }
+
+      .heading-group h1:nth-child(2) {
+        animation-delay: 0.4s;
+      }
+
+      .heading-group h2 {
+        font-size: 24px;
+        font-weight: 300;
+        letter-spacing: 12px;
+        margin-top: 30px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 1s forwards;
+        animation-delay: 0.8s;
+      }
+
+      @keyframes fadeUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .scroll-indicator {
+        position: absolute;
+        bottom: 120px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+        opacity: 0;
+        animation: fadeIn 1s forwards;
+        animation-delay: 1.5s;
+        z-index: 10;
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+
+      .scroll-indicator p {
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: 300;
+        letter-spacing: 2px;
+      }
+
+      .scroll-arrow {
+        width: 30px;
+        height: 30px;
+        border: 2px solid white;
+        border-radius: 50%;
+        position: relative;
+        animation: bounce 2s infinite;
+      }
+
+      .scroll-arrow::after {
+        content: '';
+        position: absolute;
+        top: 8px;
+        left: 11px;
+        width: 8px;
+        height: 8px;
+        border-right: 2px solid white;
+        border-bottom: 2px solid white;
+        transform: rotate(45deg);
+      }
+
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      /* Content Section */
+      .content {
+        position: relative;
+        background-color: var(--bg-light);
+      }
+
+      .intro {
+        padding: 120px 5%;
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .tagline {
+        font-family: 'Playfair Display', serif;
+        font-size: 36px;
+        max-width: 400px;
+      }
+
+      .tagline span {
+        color: var(--accent);
+        font-style: italic;
+      }
+
+      .description {
+        max-width: 600px;
+      }
+
+      .description h3 {
+        font-weight: 600;
+        margin-bottom: 16px;
+        letter-spacing: 2px;
+        font-size: 14px;
+        color: var(--primary);
+      }
+
+      .description p {
+        font-size: 18px;
+        line-height: 1.7;
+        margin-bottom: 20px;
+      }
+
+      /* Topics Grid */
+      .topics {
+        padding: 40px 5% 120px;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .topics-heading {
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 4px;
+        margin-bottom: 60px;
+        color: var(--text-light);
+        position: relative;
+      }
+
+      .topics-heading::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 3px;
+        background-color: var(--accent);
+      }
+
+      .topics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+        gap: 40px;
+      }
+
+      .topic-card {
+        background-color: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .topic-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .topic-image {
+        height: 240px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .deadlock .topic-image {
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)), url("/api/placeholder/600/360");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .scheduling .topic-image {
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)), url("/api/placeholder/600/360");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .page-replacement .topic-image {
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)), url("/api/placeholder/600/360");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .disk-scheduling .topic-image {
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)), url("/api/placeholder/600/360");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(37, 99, 235, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+
+      .topic-card:hover .image-overlay {
+        opacity: 1;
+      }
+
+      .learn-more {
+        color: white;
+        font-weight: 500;
+        letter-spacing: 1px;
+        position: relative;
+      }
+
+      .topic-title {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        color: white;
+        font-family: 'Playfair Display', serif;
+        font-size: 28px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .topic-card:hover .topic-title {
+        opacity: 0;
+      }
+
+      .topic-content {
+        padding: 25px;
+      }
+
+      .topic-content h3 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        color: var(--primary);
+      }
+
+      .topic-content p {
+        color: var(--text-light);
+        line-height: 1.6;
+      }
+
+      /* Footer */
+      .footer {
+        background-color: white;
+        padding: 100px 0;
+        text-align: center;
+        font-family: 'Playfair Display', serif;
+        font-size: 24px;
+        color: var(--text-dark);
+      }
+
+      /* Link styling */
+      a.topic-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+
+      /* Responsive */
+      @media (max-width: 1100px) {
+        .intro {
+          flex-direction: column;
+          text-align: center;
+          gap: 40px;
+        }
+        
+        .tagline, .description {
+          max-width: 100%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-content {
+          width: 95%;
+        }
+        
+        .name {
+          display: none;
+        }
+        
+        .heading-group h1 {
+          font-size: 48px;
+        }
+        
+        .heading-group h2 {
+          font-size: 18px;
+          letter-spacing: 8px;
+        }
+        
+        .topics-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .intro {
+          padding: 80px 5%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+      <div class="nav-content">
+        <div class="brand">
+          <div class="logo">VIRTUAL LAB</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-content">
+        <div class="heading-group">
+          <h1>Operating</h1>
+          <h1>System</h1>
+          <h2>VIRTUAL LAB</h2>
+        </div>
+      </div>
+      <div class="scroll-indicator">
+        <p>SCROLL</p>
+        <div class="scroll-arrow"></div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="intro">
+        <div class="tagline">
+          think <span>and</span> learn
+        </div>
+        <div class="description">
+          <h3>OPERATING SYSTEM</h3>
+          <p>
+            An operating system is a program that acts as an interface between the user and the computer hardware and controls the execution of all kinds of programs. This virtual lab provides interactive simulations to learn core OS concepts hands-on.
+          </p>
+        </div>
+      </div>
+
+      <div class="topics">
+        <div class="topics-heading">THE TOPICS</div>
+        <div class="topics-grid">
+          <a href="deadlockAlgo/deadlock.html" class="topic-link">
+            <div class="topic-card deadlock">
+              <div class="topic-image">
+                <div class="topic-title">CONCURRENCY AND DEADLOCK</div>
+                <div class="image-overlay">
+                  <div class="learn-more">LEARN MORE</div>
+                </div>
+              </div>
+              <div class="topic-content">
+                <h3>What Is DEADLOCK?</h3>
+                <p>
+                  Deadlock is a situation where a set of processes are blocked because each process is holding a resource and waiting for another resource acquired by some other process.
+                </p>
+              </div>
+            </div>
+          </a>
+
+          <a href="shedulingAlgo/shedulingAlgo.html" class="topic-link">
+            <div class="topic-card scheduling">
+              <div class="topic-image">
+                <div class="topic-title">SCHEDULING ALGORITHM</div>
+                <div class="image-overlay">
+                  <div class="learn-more">LEARN MORE</div>
+                </div>
+              </div>
+              <div class="topic-content">
+                <h3>Learn Scheduling Algorithm</h3>
+                <p>
+                  A Scheduling Algorithm is the algorithm which tells us how much CPU time we can allocate to the processes. Learn different scheduling approaches and their impact.
+                </p>
+              </div>
+            </div>
+          </a>
+
+          <div class="topic-card page-replacement">
+            <div class="topic-image">
+              <div class="topic-title">PAGE REPLACEMENT ALGORITHM</div>
+              <div class="image-overlay">
+                <div class="learn-more">LEARN MORE</div>
+              </div>
+            </div>
+            <div class="topic-content">
+              <h3>Memory Management</h3>
+              <p>
+                Page replacement algorithms decide which memory pages to page out, sometimes called swap out, or write to disk, when a page of memory needs to be allocated.
+              </p>
+            </div>
+          </div>
+
+          <div class="topic-card disk-scheduling">
+            <div class="topic-image">
+              <div class="topic-title">DISK SCHEDULING ALGORITHM</div>
+              <div class="image-overlay">
+                <div class="learn-more">LEARN MORE</div>
+              </div>
+            </div>
+            <div class="topic-content">
+              <h3>Know Disk Scheduling</h3>
+              <p>
+                Disk scheduling is done by operating systems to schedule I/O requests arriving for the disk. Disk scheduling is also known as I/O scheduling.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        Thanks For Learning With Us
+      </div>
+    </div>
+
+    <script>
+      // Navbar shrink on scroll
+      window.addEventListener('scroll', function() {
+        const nav = document.querySelector('.nav');
+        if (window.scrollY > 50) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+      });
+    </script>
+  </body>
+</html>
